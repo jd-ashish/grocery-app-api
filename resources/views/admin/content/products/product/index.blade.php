@@ -112,10 +112,11 @@
             $(".check_execlusive_offer").change(function(){
                 $(".loader").show();
                 var id = $(this).attr('item_id');
+                var ch = $(this).is(':checked');
                 $.ajax({
                     type: "POST",
                     url: "{{ route('product.execlusive.offer') }}",
-                    data: {id:id,_token: $(".token").val(),},
+                    data: {id:id,_token: $(".token").val(),status:ch},
                     success: function(data) {
                         $(".loader").hide();
                         toast(data,"success");

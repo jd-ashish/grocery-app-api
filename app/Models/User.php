@@ -51,7 +51,7 @@ class User extends Authenticatable
         return $this->hasMany(UserAddress::class);
     }
     public function getNotification(){
-        return $this->hasMany(Notification::class)->where("viewed",0);
+        return $this->hasMany(Notification::class)->where("viewed",0)->orderBy('id','desc');
     }
     public function customer()
     {

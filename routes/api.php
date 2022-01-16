@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CartsController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ImageSliderController;
+use App\Http\Controllers\Api\OfferController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\SettingController;
@@ -64,6 +66,12 @@ Route::group(['prefix' =>'v1'], function(){
             Route::post('get-address', [UserController::class, 'get_address']);
             Route::post('update-profile-pic', [UserController::class, 'update_profile_pic']);
             Route::post('get', [UserController::class, 'get_user_by_id']);
+            Route::post('update-profile', [UserController::class, 'update_profile']);
+            Route::get('deleteUserAddress/{id}', [UserController::class, 'deleteUserAddress']);
+        });
+        Route::group(['prefix' =>'notification/'], function(){
+            Route::post('get', [NotificationController::class, 'get_api_notification']);
+            Route::post('viewed', [NotificationController::class, 'viewed']);
         });
     });
 
@@ -73,12 +81,17 @@ Route::group(['prefix' =>'v1'], function(){
         Route::get('by/category/{id}', [ProductController::class, 'category'])->name('api.products.category');
         Route::get('bestSelling', [ProductController::class, 'bestSelling']);
         Route::post('variant/price', [ProductController::class, 'variantPrice']);
-        Route::post('execlusive/offer', [ProductController::class, 'execlusive_offer']);
+        Route::get('execlusive/offer', [ProductController::class, 'execlusive_offer']);
 
         // filter
         Route::get('filter/{id}/{price}/{date}', [ProductController::class, 'filter']);
 
         Route::get('search', [ProductController::class,'search']);
+    });
+    Route::group(['prefix' =>'offer/'], function(){
+        Route::get('exclusive', [OfferController::class, 'get']);
+        Route::get('exclusive-by-id/{id}', [OfferController::class, 'getById']);
+
     });
 
     Route::group(['prefix' =>'setting/'], function(){

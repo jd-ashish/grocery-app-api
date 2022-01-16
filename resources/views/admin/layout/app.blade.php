@@ -30,7 +30,7 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <!-- endinject -->
-    <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" />
+    <link rel="shortcut icon" href="{{ asset(setting("favicon")) }}" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
 
@@ -96,7 +96,34 @@
           }
         }
 
+        .pointer{
+            cursor: pointer;
+        }
+
         </style>
+        <style>
+            /* width */
+            ::-webkit-scrollbar {
+              width: 5 px;
+            }
+
+            /* Track */
+            ::-webkit-scrollbar-track {
+              box-shadow: inset 0 0 5px grey;
+              border-radius: 8px;
+            }
+
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+              background: #71C016;
+              border-radius: 10px;
+            }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+              background: #71C016;
+            }
+            </style>
 </head>
 
 <body>
@@ -191,8 +218,17 @@
         // $('.myModal').modal('show');
             $(".cnf-del").click(function(){
                 var route = $(this).attr('route');
+
+
                 $(".delete_form").attr('action',route);
                 $('.myModal').modal("show");
+
+                var attr_name = $(this).attr('attr-name');
+                if(attr_name){
+                    $(".delete_form_title").html(attr_name);
+                    $(".delete_form_btn_name").html(attr_name);
+                }
+
 
             })
             $(".close").click(function(){
@@ -206,6 +242,9 @@
             $('#table').DataTable();
         });
     </script>
+
+
+
     @yield('script')
 </body>
 

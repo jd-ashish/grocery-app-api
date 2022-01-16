@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\Uploads;
 use App\Models\User;
+use App\Models\UserAddress;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -55,6 +57,26 @@ class UserController extends Controller
         ]);
     }
 
+    public function deleteUserAddress($id){
+        $order = Order::where("shipping_address",$id)->first();
+        if($order){
+            return response()->json([
+                'error' => true,
+                'message' => "This address can not be deleted"
+            ]);
+        }else{
+            $userAddress = UserAddress::where("id",$id)->first();
+            $userAddress->delete();
+            return response()->json([
+                'error' =>false,
+                'message' => "Address has been deleted"
+            ]);
+        }
+
+        return $user = Auth::user()->getAddress;
+
+    }
+
     /**
      * Display the specified resource.
      *
@@ -78,6 +100,37 @@ class UserController extends Controller
         //
     }
 
+    public function update_profile(Request $request){
+        $user = User::findOrFail(Auth::user()->id);
+        if($user){
+            $user_check_2 = User::where("email",$request->email)->where('id','!=',Auth::user()->id)->first();
+        if($user_check_2 ){
+        return response()->json([
+                                'error' => true,
+                            'message' => "This email already used"
+                            ]);
+        }else{
+            $user->name = $request->name;
+            $user->email = $request->email;
+            if($user->save()){
+        return response()->json([
+                                'error' => false,
+                            'message' => "Profile update successfully"
+                            ]);
+            }else{
+        return response()->json([
+                                'error' => true,
+                            'message' => "Something coing wrong"
+                            ]);
+            }
+        }
+        }else{
+        return response()->json([
+                                'error' => true,
+                            'message' => "Not valid account"
+                            ]);
+        }
+    }
     public function update_profile_pic(Request $request)
     {
 // return response()->json([

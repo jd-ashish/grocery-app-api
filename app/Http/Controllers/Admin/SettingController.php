@@ -8,6 +8,7 @@ use App\Models\ImageSlider;
 use App\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 class SettingController extends Controller
 {
@@ -17,6 +18,9 @@ class SettingController extends Controller
     }
     public function ImageSliderUpload(Request $request){
         return view('admin.settings.home_section.image_slider.create');
+    }
+    public function Cron(Request $request){
+        return view('admin.cron.cron');
     }
     public function ImageSliderEdit($id){
         $slider = ImageSlider::findOrFail(decrypt($id));
@@ -69,6 +73,26 @@ class SettingController extends Controller
         $general_setting = GeneralSetting::where('user_id',Auth::user()->id)->first();
         return view('admin.settings.home_section.GlobalSetting',compact('general_setting'));
     }
+    public function privacy_policy_index(){
+        return view("admin.settings.policy.privacy_policy");
+    }
+    public function TermsConditions(){
+        return view("admin.settings.policy.terms_and_conditions");
+    }
+    public function returnPolicy(){
+        return view("admin.settings.policy.return");
+    }
+    public function contactUs(){
+        return view("admin.settings.policy.contact_us");
+    }
+    public function aboutUs(){
+        return view("admin.settings.policy.about_us");
+    }
+    public function privacy_policy(Request $request){
+        $this->createUpdate($request->key,$request->val);
+        notification("Policy update",ucfirst(str_replace("_"," ",$request->key))." Updated","global_setting",Auth::user()->id);
+        return back()->with("success",ucfirst(str_replace("_"," ",$request->key))." Updated successfully");
+    }
     public function GlobalSettingStore(Request $request){
 
         // return $request;
@@ -76,7 +100,7 @@ class SettingController extends Controller
         if($request->has("default_storage_driver")){
             $setting->value = $request->default_storage_driver;
         }
-        
+
 
 
         $rzp = 0;
@@ -110,12 +134,12 @@ class SettingController extends Controller
                 'SecretKey' => $request->SecretKey
             );
         }
-        
+
         if($request->has("cashfree")){
             $this->createUpdate("cashfree",$cashfree);
             $this->createUpdate("cashfree_details",$cashfree_details);
         }
-        
+
         if($request->has("max_execlusive")){
             $this->createUpdate("max_execlusive",$request->max_execlusive);
         }
@@ -128,13 +152,39 @@ class SettingController extends Controller
         if($request->has("no_of_decimals")){
             $this->createUpdate("no_of_decimals",$request->no_of_decimals);
         }
+        if($request->has("exclusive_offer_type")){
+            $this->createUpdate("exclusive_offer_type",$request->exclusive_offer_type);
+        }
+        if($request->has("app_logo")){
+            if($request->hasFile("app_logo")){
+                if(setting("app_logo")!=""){
+                    unlink(setting("app_logo"));
+                }
+                $path = $request->app_logo->store('uploads/media/logo');
+                ImageOptimizer::optimize(base_path('public/').$path);
+                $this->createUpdate("app_logo",$path);
+            }
+        }
+        if($request->has("favicon")){
+            if($request->hasFile("favicon")){
+                if(setting("favicon")!=""){
+                    unlink(setting("favicon"));
+                }
+                $path = $request->favicon->store('uploads/media/logo');
+                ImageOptimizer::optimize(base_path('public/').$path);
+                $this->createUpdate("favicon",$path);
+            }
+        }
+        $this->createUpdate("is_send_email_at_time_order",($request->is_send_email_at_time_order=="on")? "yes":"no");
+        $this->createUpdate("cod",($request->cod=="on")? "1":"0");
 
         if($setting->save()){
             notification("global setting Update","global setting saved successfully","global_setting",Auth::user()->id);
             return back()->with("success","Setting save successfully");
         }
     }
-    public function createUpdate($key,$val){
+    public static function createUpdate($key,$val){
+
         $setting_update_create = Setting::where("key_name",$key)->first();
         if($setting_update_create){
             $setting_update_create->value = $val;
@@ -142,6 +192,9 @@ class SettingController extends Controller
         }else{
             $setting_create = new Setting();
             $setting_create->key_name = $key;
+            if($val!=""){
+                $setting_create->value = $val;
+            }
             $setting_create->save();
             $setting_update = Setting::where("key_name",$key)->first();
             $setting_update->value = $val;

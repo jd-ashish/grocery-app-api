@@ -349,7 +349,7 @@ class ProductController extends Controller
 
     public function execlusive_offer(Request $request){
         $product = Product::find($request->id);
-        $product->exclusive_offer = 1;
+        $product->exclusive_offer = ($request->status=="true")? 1:0;
         $product->save();
         return "Exclusives offer successfully live";
     }

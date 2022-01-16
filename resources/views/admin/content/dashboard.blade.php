@@ -55,117 +55,22 @@
                             <div class="tab-pane fade show active" id="overview" role="tabpanel"
                                 aria-labelledby="overview-tab">
                                 <div class="d-flex flex-wrap justify-content-xl-between">
-                                    <div
-                                        class="d-none d-xl-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                                        <i class="mdi mdi-calendar-heart icon-lg mr-3 text-primary"></i>
-                                        <div class="d-flex flex-column justify-content-around">
-                                            <small class="mb-1 text-muted">Start date</small>
-                                            <div class="dropdown">
-                                                <a class="btn btn-secondary dropdown-toggle p-0 bg-transparent border-0 text-dark shadow-none font-weight-medium"
-                                                    href="#" role="button" id="dropdownMenuLinkA"
-                                                    data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    <h5 class="mb-0 d-inline-block">26 Jul 2018</h5>
-                                                </a>
-                                                <div class="dropdown-menu"
-                                                    aria-labelledby="dropdownMenuLinkA">
-                                                    <a class="dropdown-item" href="#">12 Aug 2018</a>
-                                                    <a class="dropdown-item" href="#">22 Sep 2018</a>
-                                                    <a class="dropdown-item" href="#">21 Oct 2018</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                                        <i class="mdi mdi-currency-usd mr-3 icon-lg text-danger"></i>
-                                        <div class="d-flex flex-column justify-content-around">
-                                            <small class="mb-1 text-muted">Revenue</small>
-                                            <h5 class="mr-2 mb-0">$577545</h5>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                                        <i class="mdi mdi-eye mr-3 icon-lg text-success"></i>
-                                        <div class="d-flex flex-column justify-content-around">
-                                            <small class="mb-1 text-muted">Total views</small>
-                                            <h5 class="mr-2 mb-0">9833550</h5>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                                        <i class="mdi mdi-download mr-3 icon-lg text-warning"></i>
-                                        <div class="d-flex flex-column justify-content-around">
-                                            <small class="mb-1 text-muted">Downloads</small>
-                                            <h5 class="mr-2 mb-0">2233783</h5>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="d-flex py-3 border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                                        <i class="mdi mdi-flag mr-3 icon-lg text-danger"></i>
-                                        <div class="d-flex flex-column justify-content-around">
-                                            <small class="mb-1 text-muted">Flagged</small>
-                                            <h5 class="mr-2 mb-0">3497843</h5>
-                                        </div>
-                                    </div>
+                                    {{ home_overview_list("mdi mdi-account-check text-primary","Total User",$user) }}
+                                    {{ home_overview_list("mdi mdi-cart text-danger","Total Order",$order) }}
+                                    {{ home_overview_list("mdi mdi-percent text-success","Total Offer",$OfferExclusive) }}
+                                    {{ home_overview_list("mdi mdi-format-list-bulleted-type text-success","Total Category",$Category) }}
+                                    {{ home_overview_list("mdi mdi-flag mr-3 text-success","Total Refund request",$RefundOrder) }}
+
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="sales" role="tabpanel"
                                 aria-labelledby="sales-tab">
                                 <div class="d-flex flex-wrap justify-content-xl-between">
-                                    <div
-                                        class="d-none d-xl-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                                        <i class="mdi mdi-calendar-heart icon-lg mr-3 text-primary"></i>
-                                        <div class="d-flex flex-column justify-content-around">
-                                            <small class="mb-1 text-muted">Start date</small>
-                                            <div class="dropdown">
-                                                <a class="btn btn-secondary dropdown-toggle p-0 bg-transparent border-0 text-dark shadow-none font-weight-medium"
-                                                    href="#" role="button" id="dropdownMenuLinkA"
-                                                    data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    <h5 class="mb-0 d-inline-block">26 Jul 2018</h5>
-                                                </a>
-                                                <div class="dropdown-menu"
-                                                    aria-labelledby="dropdownMenuLinkA">
-                                                    <a class="dropdown-item" href="#">12 Aug 2018</a>
-                                                    <a class="dropdown-item" href="#">22 Sep 2018</a>
-                                                    <a class="dropdown-item" href="#">21 Oct 2018</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                                        <i class="mdi mdi-download mr-3 icon-lg text-warning"></i>
-                                        <div class="d-flex flex-column justify-content-around">
-                                            <small class="mb-1 text-muted">Downloads</small>
-                                            <h5 class="mr-2 mb-0">2233783</h5>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                                        <i class="mdi mdi-eye mr-3 icon-lg text-success"></i>
-                                        <div class="d-flex flex-column justify-content-around">
-                                            <small class="mb-1 text-muted">Total views</small>
-                                            <h5 class="mr-2 mb-0">9833550</h5>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                                        <i class="mdi mdi-currency-usd mr-3 icon-lg text-danger"></i>
-                                        <div class="d-flex flex-column justify-content-around">
-                                            <small class="mb-1 text-muted">Revenue</small>
-                                            <h5 class="mr-2 mb-0">$577545</h5>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="d-flex py-3 border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                                        <i class="mdi mdi-flag mr-3 icon-lg text-danger"></i>
-                                        <div class="d-flex flex-column justify-content-around">
-                                            <small class="mb-1 text-muted">Flagged</small>
-                                            <h5 class="mr-2 mb-0">3497843</h5>
-                                        </div>
-                                    </div>
+                                    {{ home_overview_list("mdi mdi-cart text-success","Total Delivered",\App\Models\OrderDetail::delivery_status_by("delivered")) }}
+                                    {{ home_overview_list("mdi mdi-cart text-danger","Total Pending",\App\Models\OrderDetail::delivery_status_by("pending")) }}
+                                    {{ home_overview_list("mdi mdi-cart text-warning","Total On Review",\App\Models\OrderDetail::delivery_status_by("on_review")) }}
+                                    {{ home_overview_list("mdi mdi-cart text-success","Total On Delivery",\App\Models\OrderDetail::delivery_status_by("on_delivery")) }}
+                                    {{ home_overview_list("mdi mdi-cart text-danger","Total Cancel",\App\Models\OrderDetail::delivery_status_by("cancel")) }}
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="purchases" role="tabpanel"
@@ -248,13 +153,15 @@
                 <div class="card">
                     <div class="card-body">
                         <p class="card-title">Total sales</p>
-                        <h1>$ 28835</h1>
+                        @php
+                            $order_sell = \App\Models\OrderDetail::where('delivery_status','delivered')->sum('price');
+
+                        @endphp
+                        <h1>{{ single_price($order_sell) }}</h1>
                         <h4>Gross sales over the years</h4>
-                        <p class="text-muted">Today, many people rely on computers to do homework,
-                            work, and create or store useful information. Therefore, it is important </p>
                         <div id="total-sales-chart-legend"></div>
                     </div>
-                    <canvas id="total-sales-chart"></canvas>
+                    <canvas id="total-sales-chart" route="{{ route('dashboard.yearwise') }}"></canvas>
                 </div>
             </div>
         </div>

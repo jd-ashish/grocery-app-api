@@ -48,7 +48,9 @@
                             <div class="col-sm-8 grid-margin stretch-card">
                                 <div class="card">
                                     <div class="card-body">
-                                        <form class="forms-sample">
+                                        <form class="forms-sample" method="POST" action="{{ route('admin.profile.profile') }}">
+                                            @csrf
+                                            <input type="hidden" value="{{ $user->id }}" name="id"/>
                                             <div class="form-group">
                                                 <label for="exampleInputName1">Name</label>
                                                 <input type="text" class="form-control" name="name"
@@ -62,13 +64,13 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="phonenumber">Phone number</label>
-                                                <input type="email" class="form-control" id="phonenumber"
+                                                <input type="number" class="form-control" id="phonenumber"
                                                     placeholder="Phone number" name="phone"
                                                     value="{{ $user->phone }}">
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleSelectGender">Gender</label>
-                                                <select class="form-control" id="exampleSelectGender">
+                                                <select class="form-control" id="exampleSelectGender" name="gender">
                                                     @if ($user->getUserDetails == null)
                                                         <option value="Select Gender" selected>Selected Gender</option>
                                                     @else

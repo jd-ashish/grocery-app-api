@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Currency;
 use App\Models\Notification;
 use App\Models\Product;
 use App\Models\Uploads;
@@ -7,6 +8,7 @@ use App\Setting;
 use Facade\FlareClient\Http\Response;
 use App\Models\User;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Facades\Session;
 
 include 'api_helpers.php';
 if (! function_exists('setting')) {
@@ -66,6 +68,22 @@ if (! function_exists('inline_brd')) {
                 </div>
             </div>
         <?php
+    }
+}
+if (! function_exists('error')) {
+    function error($errors) {
+        if ($errors->any()){
+            foreach ($errors->all() as $error){
+                ?>
+                    <div class="alert bg-white text-danger alert-dismissible fade show" role="alert">
+                        <strong>Error!</strong> <?= $error?>.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                <?php
+            }
+        }
     }
 }
 if (! function_exists('get_image_by_upload_id')) {
@@ -303,21 +321,20 @@ if (! function_exists('homeDiscountedPrice')) {
 if (! function_exists('convert_price')) {
     function convert_price($price)
     {
-        // $business_settings = BusinessSetting::where('type', 'system_default_currency')->first();
-        // if($business_settings!=null){
-        //     $currency = Currency::find($business_settings->value);
-        //     $price = floatval($price) / floatval($currency->exchange_rate);
-        // }
+        if(setting("system_default_currency")!=null){
+            $currency = Currency::find(setting("system_default_currency"));
+            $price = floatval($price) / floatval($currency->exchange_rate);
+        }
 
-        // $code = \App\Currency::findOrFail(\App\BusinessSetting::where('type', 'system_default_currency')->first()->value)->code;
-        // if(Session::has('currency_code')){
-        //     $currency = Currency::where('code', Session::get('currency_code', $code))->first();
-        // }
-        // else{
-        //     $currency = Currency::where('code', $code)->first();
-        // }
+        $code =Currency::findOrFail(setting("system_default_currency"))->code;
+        if(Session::has('currency_code')){
+            $currency = Currency::where('code', Session::get('currency_code', $code))->first();
+        }
+        else{
+            $currency = Currency::where('code', $code)->first();
+        }
 
-        // $price = floatval($price) * floatval($currency->exchange_rate);
+        $price = floatval($price) * floatval($currency->exchange_rate);
 
         return $price;
     }
@@ -328,12 +345,15 @@ if (! function_exists('format_price')) {
     function format_price($price)
     {
 
-        return $price;
-        // if(BusinessSetting::where('type', 'symbol_format')->first()->value == 1){
-        //     return currency_symbol().ceil($price);
-        //     //return currency_symbol().(int)(number_format($price, BusinessSetting::where('type', 'no_of_decimals')->first()->value));
-        // }
-        // return number_format($price, BusinessSetting::where('type', 'no_of_decimals')->first()->value).currency_symbol();
+        // return $price;
+        if(setting('no_of_decimals') == 1){
+            // return currency_symbol().ceil($price);
+            return currency_symbol().(int)(number_format($price, setting('no_of_decimals')));
+        }
+        if(setting('symbol_format')=="1"){
+            return currency_symbol()." ".number_format($price, setting('no_of_decimals'));
+        }
+        return number_format($price, setting('no_of_decimals'))." ".currency_symbol();
     }
 }
 //formats currency
@@ -352,5 +372,37 @@ if (! function_exists('single_price')) {
     function single_price($price)
     {
         return format_price(convert_price($price));
+    }
+}
+
+if (! function_exists('currency_symbol')) {
+    function currency_symbol()
+    {
+        $code = Currency::findOrFail(setting('system_default_currency'))->code;
+        if(Session::has('currency_code')){
+            $currency = Currency::where('code', Session::get('currency_code', $code))->first();
+        }
+        else{
+            $currency = Currency::where('code', $code)->first();
+        }
+        return $currency->symbol;
+    }
+}
+
+
+if (! function_exists('home_overview_list')) {
+    function home_overview_list($icon,$title,$data)
+    {
+        ?>
+        <div class="d-none d-xl-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
+            <i class="<?= $icon?> icon-lg mr-3 "></i>
+            <div class="d-flex flex-column justify-content-around">
+                <small class="mb-1 text-muted"><?= $title?></small>
+                <div class="dropdown">
+                    <h5 class="mb-0 text-center "><?= count($data)?></h5>
+                </div>
+            </div>
+        </div>
+        <?php
     }
 }

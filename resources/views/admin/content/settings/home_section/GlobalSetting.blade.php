@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        <form method="post" action="{{ route('global.setting.store') }}">
+        <form method="post" action="{{ route('global.setting.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-md-6 grid-margin stretch-card">
@@ -163,6 +163,14 @@
                                     name="SecretKey" aria-label="SecretKey"
                                     value="{{ env('SecretKey') }}">
                             </div>
+                            <h4 class="card-title">Is COD enabled</h4>
+                            <div class="form-check form-check-success">
+                                <label class="form-check-label pointer">
+                                    <input type="checkbox" class="form-check-input " name="cod"
+                                        @if(setting('cod')=="1") checked @endif>
+                                        Is COD enabled
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -179,13 +187,71 @@
                                     <input type="text" class="form-control" placeholder="Max Execlusive Offfer Main Screen" aria-label="max_execlusive" name="max_execlusive" value="{{ setting('max_execlusive') }}">
                                 </div>
                             </div>
+                            <h4 class="card-title">Save time</h4>
+                            <div class="form-check form-check-success">
+                                <label class="form-check-label pointer">
+                                    <input type="checkbox" class="form-check-input " name="is_send_email_at_time_order"
+                                        @if(setting('is_send_email_at_time_order')=="yes") checked @endif>
+                                        Save your order time ~ 2-5 sec while user do order
+                                </label>
+                                <small>After turn on goto Cron <a href="{{ route('conf.cron') }}">HERE</a> use order cron sheduler</small>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Cashfree payment getway.</h4>
+                            <h4 class="card-title">Exclusive offer.</h4>
+                            <div class="form-group">
+                                <div class="form-check form-check-primary">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input " name="exclusive_offer_type"
+                                            value="card"  @if(setting('exclusive_offer_type')=="card") checked @endif>
+                                        Card wise
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-success">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input storageDriver" name="exclusive_offer_type"
+                                            value="product"  @if(setting('exclusive_offer_type')=="product") checked @endif>
+                                        Product Wise
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Site Images</h4>
+                            <div class="form-group">
+                                <label>Logo</label>
+                                <div class="input-group">
+                                    <input type="file" class="form-control" placeholder="Logo" aria-label="app_logo" name="app_logo"/>
+
+                                </div>
+                                <div class="input-group">
+                                    <img src="{{ asset(setting("app_logo")) }}"/>
+                                </div>
+                            </div>
+                            <h4 class="card-title"></h4>
+                            <div class="form-group">
+                                <label>Favicon</label>
+                                    <input type="file" class="form-control" placeholder="Favicon" aria-label="favicon" name="favicon"/>
+                                    <img src="{{ asset(setting("favicon")) }}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Exclusive offer.</h4>
 
                         </div>
                     </div>

@@ -5,7 +5,7 @@
 
              <!-- Modal Header -->
              <div class="modal-header bg-danger text-white">
-                 <h4 class="modal-title">Modal Heading</h4>
+                 <h4 class="modal-title delete_form_title">Modal Heading</h4>
                  <button type="button" class="close" model-iid=".myModal" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -16,7 +16,7 @@
                  <form class="form-controll delete_form" method="post">
                      @csrf
                      <h4 class="pb-5 text-center mt-5">Are you sure ?</h4>
-                     <button type="submit" class="btn btn-danger float-right load">Delete now</button>
+                     <button type="submit" class="btn btn-danger float-right load delete_form_btn_name">Delete now</button>
                  </form>
 
              </div>

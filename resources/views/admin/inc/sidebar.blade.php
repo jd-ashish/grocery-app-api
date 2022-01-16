@@ -18,8 +18,6 @@
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link"
                             href="{{ route('dashboard.userlist') }}">User List</a></li>
-                    <li class="nav-item"> <a class="nav-link"
-                            href="pages/ui-features/typography.html">Typography</a></li>
                 </ul>
             </div>
         </li>
@@ -36,6 +34,20 @@
                             href="{{ route('product.category') }}">Category</a></li>
                     <li class="nav-item"> <a class="nav-link"
                         href="{{ route('product.index') }}">Products</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-offer" aria-expanded="false"
+                aria-controls="ui-offer">
+                <i class="mdi mdi-account menu-icon"></i>
+                <span class="menu-title">Offer</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-offer">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link"
+                            href="{{ route('offer.exclusive') }}">Exclusive Offer</a></li>
                 </ul>
             </div>
         </li>
@@ -86,56 +98,44 @@
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="pages/forms/basic_elements.html">
-                <i class="mdi mdi-view-headline menu-icon"></i>
-                <span class="menu-title">Form elements</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="pages/charts/chartjs.html">
-                <i class="mdi mdi-chart-pie menu-icon"></i>
-                <span class="menu-title">Charts</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="pages/tables/basic-table.html">
-                <i class="mdi mdi-grid-large menu-icon"></i>
-                <span class="menu-title">Tables</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="pages/icons/mdi.html">
-                <i class="mdi mdi-emoticon menu-icon"></i>
-                <span class="menu-title">Icons</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false"
-                aria-controls="auth">
+            <a class="nav-link" data-toggle="collapse" href="#ui-conf" aria-expanded="false"
+                aria-controls="ui-conf">
                 <i class="mdi mdi-account menu-icon"></i>
-                <span class="menu-title">User Pages</span>
+                <span class="menu-title">Configuration</span>
                 <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="auth">
+            <div class="collapse" id="ui-conf">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">
-                            Login </a></li>
                     <li class="nav-item"> <a class="nav-link"
-                            href="pages/samples/login-2.html"> Login 2 </a></li>
+                            href="{{ route('conf.sms') }}">SMS setup</a></li>
                     <li class="nav-item"> <a class="nav-link"
-                            href="pages/samples/register.html"> Register </a></li>
+                        href="{{ route('conf.email') }}">Email setup</a></li>
                     <li class="nav-item"> <a class="nav-link"
-                            href="pages/samples/register-2.html"> Register 2 </a></li>
-                    <li class="nav-item"> <a class="nav-link"
-                            href="pages/samples/lock-screen.html"> Lockscreen </a></li>
+                        href="{{ route('conf.cron') }}">Cron Job</a></li>
                 </ul>
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="documentation/documentation.html">
-                <i class="mdi mdi-file-document-box-outline menu-icon"></i>
-                <span class="menu-title">Documentation</span>
+            <a class="nav-link" data-toggle="collapse" href="#ui-Policy" aria-expanded="false"
+                aria-controls="ui-Policy">
+                <i class="mdi mdi-account menu-icon"></i>
+                <span class="menu-title">Policy</span>
+                <i class="menu-arrow"></i>
             </a>
+            <div class="collapse" id="ui-Policy">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link"
+                            href="{{ route('privacy.policy') }}">Privacy Policy</a></li>
+                    <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('Terms.Conditions') }}">Terms & Conditions</a></li>
+                    <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('return.policy') }}">Return Policy</a></li>
+                    <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('contact.us') }}">Contact Us</a></li>
+                    <li class="nav-item"> <a class="nav-link"
+                        href="{{ route('about.us') }}">About Us</a></li>
+                </ul>
+            </div>
         </li>
     </ul>
 </nav>

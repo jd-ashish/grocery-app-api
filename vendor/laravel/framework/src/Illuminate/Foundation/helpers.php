@@ -18,6 +18,7 @@ use Illuminate\Foundation\Mix;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Queue\CallQueuedClosure;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\HtmlString;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -117,6 +118,37 @@ if (! function_exists('app')) {
         }
 
         return Container::getInstance()->make($abstract, $parameters);
+    }
+}
+if (! function_exists('isIHIns')) {
+    /**
+     * Get the available container instance.
+     *
+     * @param  string|null  $abstract
+     * @param  array  $parameters
+     * @return mixed|\Illuminate\Contracts\Foundation\Application
+     */
+    function isIHIns()
+    {
+        $path = Storage::path(installDir());
+        if(!file_exists($path)){
+            return false;
+        }else{
+            return true;
+        }
+    }
+}
+if (! function_exists('installDir')) {
+    /**
+     * Get the available container instance.
+     *
+     * @param  string|null  $abstract
+     * @param  array  $parameters
+     * @return mixed|\Illuminate\Contracts\Foundation\Application
+     */
+    function installDir()
+    {
+        return 'uploads/install/update.sql';
     }
 }
 

@@ -4,15 +4,20 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PurchaseHistoryCollection;
+use App\Mail\ConfirmOrder;
 use App\Models\Carts;
+use App\Models\CronJobModel\OrderJob;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\ProductStock;
 use App\Models\RefundOrder;
 use App\Models\User;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -43,9 +48,9 @@ class OrderController extends Controller
         // save order details
         foreach ($cartItems as $cartItem) {
             $product = Product::findOrFail($cartItem->product_id);
-            if ($cartItem->variant) {
-                $cartItemVariation = $cartItem->variant;
-                $product_stocks = $product->stocks->where('variant', $cartItem->variant)->first();
+            if ($cartItem->product_stock_id) {
+                $cartItemVariation = $cartItem->product_stock_id;
+                $product_stocks = ProductStock::where("id",$cartItem->product_stock_id)->first();
                 $product_stocks->qty -= $cartItem->qty;
                 $product_stocks->save();
             } else {
@@ -57,7 +62,7 @@ class OrderController extends Controller
                 'order_id' => $order->id,
                 'seller_id' => $product->user_id,
                 'product_id' => $product->id,
-                'variation' => $cartItem->variant,
+                'variation' => ($cartItem->product_stock_id)? ProductStock::where("id",$cartItem->product_stock_id)->first()->variant:$cartItem->product_stock_id,
                 'price' => $cartItem->price * $cartItem->qty,
                 'quantity' => $cartItem->qty,
                 'payment_status' => $request->payment_status
@@ -74,6 +79,9 @@ class OrderController extends Controller
         //     ]);
         // }
 
+                //stores the pdf for invoice
+
+
         // calculate commission
         // $commission_percentage = BusinessSetting::where('type', 'vendor_commission')->first()->value;
         // foreach ($order->orderDetails as $orderDetail) {
@@ -89,7 +97,27 @@ class OrderController extends Controller
         $user = User::findOrFail(Auth::user()->id);
         $user->carts()->delete();
 
-        notification("New Order","New order has been placed successfully","new_order",Auth::user()->id);
+
+        if(setting("is_send_email_at_time_order")=="no" && Auth::user()->email!=""){
+            Mail::to($request->SEND_TEST_EMAIL)->send(new ConfirmOrder($order));
+        }else{
+            $OrderJob = new OrderJob();
+            $OrderJob->order_id = $order->id;
+            $OrderJob->type = "success";
+            $OrderJob->action = "email";
+            $OrderJob->status = 0;
+            $OrderJob->save();
+        }
+        if(setting("is_send_email_at_time_order")=="no"){
+            notification("New Order","New order has been placed successfully","new_order",Auth::user()->id);
+        }else{
+            $OrderJob = new OrderJob();
+            $OrderJob->order_id = $order->id;
+            $OrderJob->type = "success";
+            $OrderJob->action = "notification";
+            $OrderJob->status = 0;
+            $OrderJob->save();
+        }
 
         return response()->json([
             'error' => false,
