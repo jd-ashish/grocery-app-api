@@ -251,8 +251,29 @@
                 <div class="col-md-6 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Exclusive offer.</h4>
-
+                            <h4 class="card-title">Admin Login Config.</h4>
+                            <div class="form-group">
+                                <label></label>
+                                <div class="form-check form-check-success">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input " name="login_by_phone"
+                                             @if(setting('login_by_phone')=="1") checked @endif>
+                                            Login With Phone
+                                    </label>
+                                    <small>Make sure you have sms configuration!</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label></label>
+                                <div class="form-check form-check-success">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input " name="is_dummy"
+                                            @if(setting('is_dummy')=="1") checked @endif>
+                                            Is dummy data On
+                                    </label>
+                                    <small>OTP=123456 , password=your_mobile@123 , email=admin@gmail.com!</small>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

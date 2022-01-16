@@ -25,6 +25,20 @@ class Dashboard extends Controller
      */
     public function index()
     {
+        $messageBird = new \MessageBird\Client('mFbdjOR8FSoTS5P9XPQiyDg3v');
+        $balance = json_encode($messageBird->balance->read());
+//         // return $balance;
+
+//   $Message = new \MessageBird\Objects\Message();
+//   $Message->originator = 'TestMessage';
+//   $Message->recipients = array(+917079692988);
+//   $Message->body = 'This is a test message';
+
+//   return json_encode($messageBird->messages->create($Message));
+
+//         print_r(json_decode($balance));
+//         return "sdhgjgcjhf ". gettype($balance);
+
         $user = User::all();
         $order = Order::all();
         $OfferExclusive = OfferExclusive::all();

@@ -31,7 +31,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/admin/login', [HomeController::class,'login'])->name('admin.login');
 Route::get('/login', [HomeController::class,'login'])->name('admin.login');
+Route::get('/login', [HomeController::class,'login'])->name('login');
 Route::post('/logout', [LoginController::class,'logout'])->name('logout');
+Route::post('/login/admin', [HomeController::class, 'LoginAdmin'])->name('login.admin');
 
 Route::post('/admin/login/by/phone', [HomeController::class,'PhoneLogin'])->name('admin.login.phone');
 Route::post('/admin/login/by/phone/verify', [HomeController::class,'PhoneLoginVerify'])->name('admin.login.phone.verify');

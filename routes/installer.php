@@ -19,6 +19,7 @@ Route::get('/install/app', [InstallController::class, 'install'])->name('install
 Route::post('/install/validate', [InstallController::class, 'CodeValidate'])->name('install.validate');
 Route::post('/install/start', [InstallController::class, 'InstallStart'])->name('install.start');
 Route::post('/install/db/check', [InstallController::class, 'DbCheck'])->name('install.db.check');
+Route::post('/install/db/create/account', [InstallController::class, 'CreateAccount'])->name('install.create.account');
 
 
 //evtocode

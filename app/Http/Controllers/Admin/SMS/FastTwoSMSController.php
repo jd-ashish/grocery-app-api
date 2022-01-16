@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 class FastTwoSMSController extends Controller
 {
-    public function sendOTP($data){
+    public static function sendOTP($data = array()){
         $fields = array(
             "variables_values" => $data['otp'],
             "route" => "otp",

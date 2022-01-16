@@ -144,7 +144,7 @@
                     <h3 style="margin-bottom: 16px;">My Cart</h3>
                     <div class="form-row">
                         <div class="form-holder w-100">
-                            <input type="text" class="form-control code-etvo" placeholder="Enter Code">
+                            <input type="text" class="form-control code-etvo" placeholder="Enter purchase code">
                             <i class="validate" style="cursor: pointer; background:green; color:white; padding:8px; margin-right:-17px; margin-top:0px">Validate</i>
                         </div>
                     </div>
@@ -153,7 +153,12 @@
                 <!-- SECTION 4 -->
                 <h4></h4>
                 <section>
-                    <h3>Cart Totals</h3>
+                    <h4>If you are facing issus in install time flow then documentation of write an email
+                        <a href="mailto:ranjanahish254@gmail.com">ranjanahish254@gmail.com</a></h4>
+                        <p>Your name</p>
+                        <p>Your phone</p>
+                        <p>Your purchase code</p>
+                        <p>Wait for response</p>
 
                 </section>
             </form>
@@ -289,36 +294,16 @@
                         },
                             success: function(data) {
                                 // $(".loader").show();
-                                $('.l-t').html("Re Import databses");
+                                // $('.l-t').html("Re Import databses");
 
-                                $.ajax({
-                                    type: "POST",
-                                    url: "{{ route('install.start') }}",
-                                    data: {code:$('.code-etvo').val(),_token: $(".token").val(),
-                                    first_name : $(".first_name").val(),
-                                    last_name : $(".last_name").val(),
-                                    email_id : $(".email_id").val(),
-                                    phone : $(".phone").val(),
-                                    host : $(".host").val(),
-                                    db_name : $(".db_name").val(),
-                                    db_user : $(".db_user").val(),
-                                    db_pass : $(".db_pass").val(),
-                                },
-                                    success: function(data) {
-                                        // $(".loader").show();
-                                        $('.l-t').html("Creating account");
-                                        $(".loader").hide();
-                                        // if(data.error=="0"){
-                                        //     $(".loader").hide();
-                                        //     alert(data.message);
-                                        // }else if(data.error=="1"){
-                                        //     $('.l-t').html(data.message);
-                                        // }else if(data.error=="2"){
-                                        //     $(".loader").hide();
-                                        //     alert(data.message);
-                                        // }
-                                    }
-                                });
+                                $('.l-t').html("Creating account");
+                                        var delayInMilliseconds = 65000; //1 min //wait for finish upload data
+
+                                        setTimeout(function() {
+                                            create_account();
+                                        //your code to be executed after 1 second
+                                        }, delayInMilliseconds);
+
                             },
                             error: function(data){
                                 i++;
@@ -333,6 +318,51 @@
                     setup();
 
                 })
+                function create_account(){
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('install.create.account') }}",
+                        data: {code:$('.code-etvo').val(),_token: $(".token").val(),
+                        first_name : $(".first_name").val(),
+                        last_name : $(".last_name").val(),
+                        email_id : $(".email_id").val(),
+                        phone : $(".phone").val(),
+                        host : $(".host").val(),
+                        db_name : $(".db_name").val(),
+                        db_user : $(".db_user").val(),
+                        db_pass : $(".db_pass").val(),
+                    },
+                        success: function(data) {
+                            // $(".loader").show();
+                            if(data.error){
+                                alert(data.message);
+                            }else{
+                                $('.l-t').html(data.message);
+                                var delayInMilliseconds = 5000; //5 sec
+
+                                setTimeout(function() {
+                                    $(".loader").hide();
+                                    window.location = '{{  route("admin.login") }}';
+                                //your code to be executed after 1 second
+                                }, delayInMilliseconds);
+                            }
+
+
+                            // if(data.error=="0"){
+                            //     $(".loader").hide();
+                            //     alert(data.message);
+                            // }else if(data.error=="1"){
+                            //     $('.l-t').html(data.message);
+                            // }else if(data.error=="2"){
+                            //     $(".loader").hide();
+                            //     alert(data.message);
+                            // }
+                        },
+                    error: function(data){
+                        create_account();
+                    }
+                    });
+                }
             });
         </script>
 

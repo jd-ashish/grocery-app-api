@@ -235,6 +235,7 @@ return [
         'Image' => \Intervention\Image\Facades\Image::class,
         'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+
     ],
 
 ];

@@ -211,6 +211,7 @@ class AuthController extends Controller
     }
     public function login(Request $request)
     {
+        $otp = random_int(100000, 999999);
         if($request->phone==""){
             return $this->message(["message"=>"Enter email filed " ,"error"=>true]);
         }
@@ -219,7 +220,8 @@ class AuthController extends Controller
 
         if(is_numeric($request->get('phone'))){
             $user = ModelsUser::where('phone',$request->phone)->where('status',1)->first();
-            return $this->message(["message"=>"Otp send successfully " ,"error"=>false,"otp" => 123456]);
+            send_otp($request->phone,$otp);
+            return $this->message(["message"=>"Otp send successfully " ,"error"=>false,"otp" => $otp]);
 
 
         }elseif (filter_var($request->get('phone'), FILTER_VALIDATE_EMAIL)) {

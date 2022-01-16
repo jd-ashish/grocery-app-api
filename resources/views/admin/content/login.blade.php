@@ -72,7 +72,8 @@
               </div>
               <h4>Hello! let's get started </h4>
               <h6 class="font-weight-light">Sign in to continue.</h6>
-              <form class="pt-3">
+              <form class="pt-3" method="post" action="{{ route('login.admin') }}">
+                @csrf
                   @if (setting('login_by_phone')=='1')
                   <div class="form-group">
                         <div class="input-group">
@@ -98,29 +99,31 @@
                           </div>
                   @else
                     <div class="form-group">
-                        <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email">
+                        <input type="email" name="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    <div class="mt-3">
-                        <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="../../index.html">SIGN IN</a>
+                        <input type="password" name="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
                     </div>
                     <div class="my-2 d-flex justify-content-between align-items-center">
                         <div class="form-check">
                           <label class="form-check-label text-muted">
-                            <input type="checkbox" class="form-check-input">
+                            <input type="checkbox" class="form-check-input" name="remember">
                             Keep me signed in
                           </label>
                         </div>
-                        <a href="#" class="auth-link text-black">Forgot password?</a>
+                        {{-- <a href="#" class="auth-link text-black">Forgot password?</a> --}}
                       </div>
+                    <div class="mt-3">
+                        <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit">SIGN IN</button>
+                    </div>
+
                   @endif
 
-
-                <div class="mb-2">
-                  <button type="button" class="btn btn-block btn-facebook auth-form-btn verify_admin"> Verify admin</button>
-                </div>
+                @if (setting('login_by_phone')=='1')
+                    <div class="mb-2">
+                    <button type="button" class="btn btn-block btn-facebook auth-form-btn verify_admin"> Verify admin</button>
+                    </div>
+                @endif
               </form>
             </div>
           </div>
@@ -327,4 +330,39 @@ document.getElementById('otpSubmit').addEventListener("click", function() {
 
     });
 </script>
+<script>
+    function toast(message,type){
+        var typ = "";
+        if(type=="success"){
+            typ = "linear-gradient(to right, #00b09b, #96c93d)";
+        }else{
+            typ = "linear-gradient(to right, #ff0000, #96c93d)";
+        }
+        Toastify({
+            text: message,
+            duration: 3000,
+            newWindow: true,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+                background: typ,
+            },
+            onClick: function(){} // Callback after click
+        }).showToast();
+    }
+</script>
+
+@if(session("success"))
+    <script>
+        toast("{{ session('success') }}","success");
+    </script>
+@endif
+
+@if(session("error"))
+    <script>
+        toast("{{ session('error') }}","success");
+    </script>
+@endif
   @endsection

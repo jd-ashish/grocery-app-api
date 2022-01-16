@@ -155,6 +155,16 @@ class SettingController extends Controller
         if($request->has("exclusive_offer_type")){
             $this->createUpdate("exclusive_offer_type",$request->exclusive_offer_type);
         }
+        if($request->has("login_by_phone")){
+            $this->createUpdate("login_by_phone",($request->login_by_phone=="on")? "1":"0");
+        }else{
+            $this->createUpdate("login_by_phone","0");
+        }
+        if($request->has("is_dummy")){
+            $this->createUpdate("is_dummy",($request->is_dummy=="on")? "1":"0");
+        }else{
+            $this->createUpdate("is_dummy","0");
+        }
         if($request->has("app_logo")){
             if($request->hasFile("app_logo")){
                 if(setting("app_logo")!=""){

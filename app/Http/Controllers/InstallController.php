@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use PDO;
-
+use RegistersUsers;
 class InstallController extends Controller
 {
     public function install()
@@ -76,9 +78,7 @@ class InstallController extends Controller
                 "message" => "PURCHASE CODE NOT FOUND"
             ];
         }
-        $name = $request->first_name." " .$request->last_name;
-        $email = $request->email_id;
-        $phone = $request->phone;
+
         $host = $request->host;
         $db_name = $request->db_name;
         $db_user = $request->db_user;
@@ -90,7 +90,7 @@ class InstallController extends Controller
         $this->overWriteEnvFile("INIT_DB_PASSWORD",$db_pass);
 
         $path = Storage::path(installDir());
-        $con = new PDO("mysql:host=localhost;dbname=test10","root","");
+        $con = new PDO("mysql:host=$host;dbname=$db_name",$db_user,$db_pass);
     $stmt = $con->prepare(file_get_contents($path));
     return $stmt->execute();
     if($stmt->execute()){
@@ -102,6 +102,42 @@ class InstallController extends Controller
 
         return [
             "error" => "2",
+            "message" => "Install complected"
+        ];
+    }
+    public function CreateAccount(Request $request){
+        $name = $request->first_name." " .$request->last_name;
+        $email = $request->email_id;
+        $phone = $request->phone;
+        $this->overWriteEnvFile("CODE",$request->code);
+        $user_check = User::where("email",$email)->first();
+        if($user_check){
+            $user_check_phone = User::where("phone",$phone)->first();
+            if($user_check_phone){
+                return [
+                    "error" => false,
+                    "message" => "Install complected"
+                ];
+            }else{
+                $user_check->phone = $phone;
+                $user_check->user_type = "admin";
+                $user_check->save();
+                return [
+                    "error" => false,
+                    "message" => "Install complected"
+                ];
+            }
+        }
+        $user = new User();
+        $user->name = $name;
+        $user->email = $email;
+        $user->phone = $phone;
+        $user->user_type = "admin";
+        $user->plateform = "web";
+        $user->password = Hash::make($phone."@123");
+        $user->save();
+        return [
+            "error" => false,
             "message" => "Install complected"
         ];;
     }

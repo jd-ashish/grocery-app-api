@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\SMS\FastTwoSMSController;
 use App\Models\Currency;
 use App\Models\Notification;
 use App\Models\Product;
@@ -21,11 +22,26 @@ if (! function_exists('setting')) {
 }
 
 if (! function_exists('send_otp')) {
-    function send_otp($phone,$message) {
+    function send_otp($phone,$otp) {
 
+
+        $sms = "Your otp is : ".$otp;
+        if(setting("is_dummy")=="1"){
+            Cookie::queue(Cookie::forget('otp'));
+            Cookie::queue('otp', 123456, 10);
+            return ['error' => false,'message' => "OTP send successfully" , 'otp' => 123456];
+        }
+
+        if(setting("default_sms")=="fast_2_sms"){
+            $send = array("phone" => $phone , "otp" => $otp);
+            $f2s = FastTwoSMSController::sendOTP($send);
+        }
+
+        // new FastTwoSMSController::sendOTP();
         Cookie::queue(Cookie::forget('otp'));
-        Cookie::queue('otp', 123456, 10);
-        return ['error' => false,'message' => "OTP send successfully" , 'otp' => 123456];
+        Cookie::queue('otp', $otp, 10);
+        return ['error' => false,'message' => "OTP send successfully" , 'otp' => $otp];
+
     }
 }
 
