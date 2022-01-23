@@ -37,16 +37,16 @@
                                     <div class="form-group">
                                         <div class="form-check form-check-primary">
                                             <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="storage_driver1"
+                                                <input type="radio" class="form-check-input" name="sms_driver"
                                                     value="Cloudinar" id="ExampleRadio1" checked>
                                                 Fast To SMS
                                             </label>
                                         </div>
                                         <div class="form-check form-check-success">
                                             <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="storage_driver2"
+                                                <input type="radio" class="form-check-input" name="sms_driver2"
                                                     value="LocalStorage" id="ExampleRadio2" checked>
-                                                Local Storage
+                                                    MessageBird
                                             </label>
                                         </div>
                                     </div>
@@ -63,14 +63,41 @@
                                             <small><a href="https://www.fast2sms.com?aff=ICYkqRgi">SIGNUP Fast 2 SMS</a></small>
                                         </div>
                                         <div class="form-check form-check-success">
-                                            <label class="form-check-label">
-                                                <input type="radio" class="form-check-input storageDriver" name="default_sms"
-                                                    value="local" id="ExampleRadio2" @if(setting('default_sms')=="local") checked @endif>
-                                                Local Storage
+                                            <label class="form-check-label pointer">
+                                                <input type="radio" class="form-check-input MessageBird" name="default_sms"
+                                                    value="MessageBird" id="ExampleRadio2" @if(setting('default_sms')=="message_bird_api_key") checked @endif>
+                                                    MessageBird
                                             </label>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Message Bird Configuration </h4>
+                            <div class="form-group">
+                                <label>API KEY</label>
+                                <input type="text" class="form-control form-control-sm message_bird_api_key" placeholder="Api Key"
+                                    name="message_bird_api_key" aria-label="message_bird_api_key" value="{{ setting('message_bird_api_key') }}">
+                                    <small><a href="https://messagebird.com/">SIGNUP MessageBird or get api key</a></small>
+                            </div>
+                            @if(setting('default_sms')=="message_bird_api_key")
+                            @php
+                            $mb = \App\Http\Controllers\Admin\SMS\MessageBird::ballance();
+                                // print_r($mb);
+                                //[payment] => prepaid [type] => credits [amount] => 10
+                            @endphp
+                            @endif
+                            <h4>{{ $mb->amount }} {{ $mb->type }} Available</h4>
+                            <div class="template-demo float-right">
+                                <button type="button" class="btn btn-outline-primary btn-icon-text saveMessageBird">
+                                    <i class="mdi mdi-file-check btn-icon-prepend"></i>
+                                    Save MessageBird Configurations
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -236,8 +263,14 @@
             $(".fast_2_sms").change(function(){
                 fast_2_smsCheck();
             })
+            $(".MessageBird").change(function(){
+                MessageBirdCheck();
+            })
             $(".saveF2s").click(function(){
                 saveF2s();
+            })
+            $(".saveMessageBird").click(function(){
+                saveMessageBird();
             })
             function fast_2_smsCheck() {
                 $(".loader").show();
@@ -249,10 +282,33 @@
                         $(".loader").hide();
                         if(data){
                             $(".fast_2_sms").prop('checked',true);
+                            $(".MessageBird").prop('checked',false);
 
                         }else{
                             toast("Please config Fast2Sms","error");
                             $(".fast_2_sms").prop('checked',false);
+                            $(".MessageBird").prop('checked',true);
+                        }
+
+                    }
+                });
+            }
+            function MessageBirdCheck() {
+                $(".loader").show();
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('is.MessageBir.install') }}",
+                    data: {_token: $(".token").val()},
+                    success: function(data) {
+                        $(".loader").hide();
+                        if(data){
+                            $(".MessageBird").prop('checked',true);
+                            $(".fast_2_sms").prop('checked',false);
+
+                        }else{
+                            toast("Please config Message Bird","error");
+                            $(".fast_2_sms").prop('checked',true);
+                            $(".MessageBird").prop('checked',false);
                         }
 
                     }
@@ -265,6 +321,20 @@
                     type: "POST",
                     url: "{{ route('save.saveF2s-config') }}",
                     data: {fast_2_sms_api_key:$(".fast_2_sms_api_key").val(),is_f2s_dlt:is_f2s_dlt,_token: $(".token").val()},
+                    success: function(data) {
+                        $(".loader").hide();
+                        toast("Update successfully ","success");
+
+                    }
+                });
+            }
+            function saveMessageBird() {
+                $(".loader").show();
+                var is_f2s_dlt = $('.is_f2s_dlt').is(":checked")
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('save.saveMessageBird-config') }}",
+                    data: {message_bird_api_key:$(".message_bird_api_key").val(),_token: $(".token").val()},
                     success: function(data) {
                         $(".loader").hide();
                         toast("Update successfully ","success");

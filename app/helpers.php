@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\SMS\FastTwoSMSController;
+use App\Http\Controllers\Admin\SMS\MessageBird;
 use App\Models\Currency;
 use App\Models\Notification;
 use App\Models\Product;
@@ -35,6 +36,10 @@ if (! function_exists('send_otp')) {
         if(setting("default_sms")=="fast_2_sms"){
             $send = array("phone" => $phone , "otp" => $otp);
             $f2s = FastTwoSMSController::sendOTP($send);
+        }
+        if(setting("default_sms")=="message_bird_api_key"){
+            $send = array("phone" => $phone , "otp" => $otp);
+            $f2s = MessageBird::sendOtp($send);
         }
 
         // new FastTwoSMSController::sendOTP();

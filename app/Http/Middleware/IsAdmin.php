@@ -18,7 +18,10 @@ class IsAdmin
     public function handle(Request $request, Closure $next)
     {
         if (Auth::check() && (Auth::user()->user_type == 'admin' || Auth::user()->user_type == 'staff')) {
-            return $next($request);
+            if(setting("live")=="1"){
+                return $next($request);
+            }
+            return redirect(route("install.app"));
         }
         else{
             return redirect('/');

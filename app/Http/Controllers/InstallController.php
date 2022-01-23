@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Admin\SettingController;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -14,6 +15,17 @@ class InstallController extends Controller
 {
     public function install()
     {
+
+
+
+
+        if(@mysqli_connect(env("DB_HOST"), env("DB_USERNAME"), env("DB_PASSWORD"), env("DB_DATABASE"))) {
+            if(setting("live")!="1"){
+                return redirect(route("install.app"));
+            }else{
+                return redirect(route("admin.login"));
+            }
+        }
         return view('install.install');
     }
     public function CodeValidate(Request $request){
@@ -84,10 +96,10 @@ class InstallController extends Controller
         $db_user = $request->db_user;
         $db_pass = $request->db_pass;
 
-        $this->overWriteEnvFile("INIT_DB_HOST",$host);
-        $this->overWriteEnvFile("INIT_DB_DATABASE",$db_name);
-        $this->overWriteEnvFile("INIT_DB_USERNAME",$db_user);
-        $this->overWriteEnvFile("INIT_DB_PASSWORD",$db_pass);
+        $this->overWriteEnvFile("DB_HOST",$host);
+        $this->overWriteEnvFile("DB_DATABASE",$db_name);
+        $this->overWriteEnvFile("DB_USERNAME",$db_user);
+        $this->overWriteEnvFile("DB_PASSWORD",$db_pass);
 
         $path = Storage::path(installDir());
         $con = new PDO("mysql:host=$host;dbname=$db_name",$db_user,$db_pass);
@@ -128,6 +140,7 @@ class InstallController extends Controller
                 ];
             }
         }
+        SettingController::createUpdate("live","1");
         $user = new User();
         $user->name = $name;
         $user->email = $email;

@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\MAIL\EmailController;
 use App\Http\Controllers\Admin\OfferController;
 use App\Http\Controllers\Admin\SMS\FastTwoSMSController;
+use App\Http\Controllers\Admin\SMS\MessageBird;
 use App\Http\Controllers\Admin\SmsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\InvoiceController;
@@ -55,6 +56,10 @@ Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function()
         Route::get('check-details',[FastTwoSMSController::class, 'check'])->name('check.f2s');
         Route::post('save-saveF2s-config',[FastTwoSMSController::class, 'saveF2s'])->name('save.saveF2s-config');
         Route::post('is-f2s-install',[FastTwoSMSController::class, 'isF2sInstall'])->name('is.f2s.install');
+    });
+    Route::group(['prefix' =>'MessageBir', 'middleware' => ['auth', 'admin']], function(){
+        Route::post('is-MessageBir-install',[MessageBird::class, 'isMessageBirdInstall'])->name('is.MessageBir.install');
+        Route::post('is-MessageBir-save',[MessageBird::class, 'saveMessageBird'])->name('save.saveMessageBird-config');
     });
     Route::group(['prefix' =>'email', 'middleware' => ['auth', 'admin']], function(){
         Route::post('save-smtp-details',[EmailController::class, 'saveSmtp'])->name('save.saveSmtpEmail-config');

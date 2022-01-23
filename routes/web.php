@@ -16,12 +16,50 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return view('welcome.index');
+    if(@mysqli_connect(env("DB_HOST"), env("DB_USERNAME"), env("DB_PASSWORD"), env("DB_DATABASE"))) {
+        if(setting("live")!="1"){
+            return redirect(route("install.app"));
+        }
+    }
+    $token = "crRe-367RkuobrkK43Hams:APA91bGEEkvVfrN0042mRwmOaxlnx26CXNiXi-HPkL4S7Clh8S2hAIHvCHh0t1DR_X3NrzG2Bay8VNdPoTk-47eBkd0lFQMWPM19pJPqxBiA2gIzEXoRRjo-uDIu-EyzYGgHRldt3DAa";
+    $title = "Notification title";
+    $body = "Hello I am from Your php server";
+    $notification = array('title' =>$title , 'body' => $body, 'sound' => 'default', 'badge' => '1');
+    $arrayToSend = array('to' => $token, 'notification' => $notification,'priority'=>'high');
+    // $json = json_encode($arrayToSend);
+    $data = json_encode($arrayToSend);
+//FCM API end-point
+$url = 'https://fcm.googleapis.com/fcm/send';
+//api_key in Firebase Console -> Project Settings -> CLOUD MESSAGING -> Server key
+$server_key = 'YOUR_KEY';
+//header with content_type api key
+$headers = array(
+    'Content-Type:application/json',
+    'Authorization:key='.setting("fmc")
+);
+//CURL request to route notification to FCM connection server (provided by Google)
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+$result = curl_exec($ch);
+if ($result === FALSE) {
+    die('Oops! FCM Send Error: ' . curl_error($ch));
+}
+curl_close($ch);
+
+return $result;
+
+    // return view('welcome.index');
 });
 
 // Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['prefix' =>'media', 'middleware' => ['auth']], function(){
     Route::post('/upload', [MediaController::class, 'upload'])->name('media.upload');

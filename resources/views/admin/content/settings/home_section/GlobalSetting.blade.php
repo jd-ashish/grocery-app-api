@@ -9,7 +9,7 @@
             <div class="col-md-12 grid-margin">
                 <div class="d-flex justify-content-between flex-wrap">
                     {{ inline_brd(['Dashboard', 'Settings', 'Global setting']) }}
-                    <div class="d-flex justify-content-between align-items-end flex-wrap">
+                    {{-- <div class="d-flex justify-content-between align-items-end flex-wrap">
                         <button type="button" class="btn btn-light bg-white btn-icon mr-3 d-none d-md-block ">
                             <i class="mdi mdi-download text-muted"></i>
                         </button>
@@ -20,7 +20,7 @@
                             <i class="mdi mdi-plus text-muted"></i>
                         </button>
                         <button class="btn btn-primary mt-2 mt-xl-0">Download report</button>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -258,7 +258,7 @@
                                     <label class="form-check-label">
                                         <input type="checkbox" class="form-check-input " name="login_by_phone"
                                              @if(setting('login_by_phone')=="1") checked @endif>
-                                            Login With Phone
+                                            Login With Phone (<small>For admin Login</small>)
                                     </label>
                                     <small>Make sure you have sms configuration!</small>
                                 </div>
@@ -272,6 +272,13 @@
                                             Is dummy data On
                                     </label>
                                     <small>OTP=123456 , password=your_mobile@123 , email=admin@gmail.com!</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>FMC server key</label>
+                                <div class="input-group">
+                                    <textarea  class="form-control" placeholder="FMC server key" rows="8" aria-label="app_logo" name="fmc">{{ setting("fmc") }}</textarea>
+
                                 </div>
                             </div>
                         </div>

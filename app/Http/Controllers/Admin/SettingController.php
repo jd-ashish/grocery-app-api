@@ -155,6 +155,9 @@ class SettingController extends Controller
         if($request->has("exclusive_offer_type")){
             $this->createUpdate("exclusive_offer_type",$request->exclusive_offer_type);
         }
+        if($request->has("fmc")){
+            $this->createUpdate("fmc",$request->fmc);
+        }
         if($request->has("login_by_phone")){
             $this->createUpdate("login_by_phone",($request->login_by_phone=="on")? "1":"0");
         }else{

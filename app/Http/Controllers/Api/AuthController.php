@@ -211,7 +211,12 @@ class AuthController extends Controller
     }
     public function login(Request $request)
     {
-        $otp = random_int(100000, 999999);
+        if(setting("is_dummy")=="1"){
+            $otp = 123456;
+        }else{
+            $otp = random_int(100000, 999999);
+        }
+
         if($request->phone==""){
             return $this->message(["message"=>"Enter email filed " ,"error"=>true]);
         }

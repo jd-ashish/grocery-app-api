@@ -45,11 +45,12 @@
                                 <a class="nav-link" id="sales-tab" data-toggle="tab" href="#sales"
                                     role="tab" aria-controls="sales" aria-selected="false">Sales</a>
                             </li>
-                            <li class="nav-item">
+                            {{-- Up comming update --}}
+                            {{-- <li class="nav-item">
                                 <a class="nav-link" id="purchases-tab" data-toggle="tab"
                                     href="#purchases" role="tab" aria-controls="purchases"
                                     aria-selected="false">Purchases</a>
-                            </li>
+                            </li> --}}
                         </ul>
                         <div class="tab-content py-0 px-0">
                             <div class="tab-pane fade show active" id="overview" role="tabpanel"
@@ -137,7 +138,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-7 grid-margin stretch-card">
+            <div class="col-md-7 grid-margin stretch-card" style="display:none">
+                {{-- Up comming update --}}
                 <div class="card">
                     <div class="card-body">
                         <p class="card-title">Cash deposits</p>
@@ -165,7 +167,8 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        {{-- Upcomming update --}}
+        <div class="row" style="display:none">
             <div class="col-md-12 stretch-card">
                 <div class="card">
                     <div class="card-body">
