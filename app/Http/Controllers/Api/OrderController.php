@@ -119,6 +119,16 @@ class OrderController extends Controller
             $OrderJob->save();
         }
 
+        $data_fmc=[
+            "title"=>"Order placed successfully",
+            "message"=>"Your order has been placed successfully",
+            "image"=>null,
+            "type"=>"new_order",
+            "user_id"=> Auth::user()->id,
+        ];
+
+        fmc($data_fmc);
+
         return response()->json([
             'error' => false,
             'message' => 'Your order has been placed successfully'

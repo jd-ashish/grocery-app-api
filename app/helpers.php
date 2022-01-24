@@ -13,12 +13,68 @@ use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Support\Facades\Session;
 
 include 'api_helpers.php';
+
 if (! function_exists('setting')) {
     function setting($key) {
         $setting = Setting::where('key_name', $key)->first();
         if($setting){
             return $setting->value;
         }
+    }
+}
+
+if (! function_exists('fmc')) {
+    function fmc($data) {
+$user = User::where('id',$data['user_id'])->first();
+        // $token = "fmFMrJTSTZyWYWQyVQakoC:APA91bFkg_NQhf0DrdXQDzxjDuGKihEAGo4Nb4F__9T12yttMU6xflbgB1uzz4gT3V2FZRLzyjlOapTO8fOIZHGauLqjQHcoqFjrsvBdjVBF70tuo5gCPFnbXyyUWVnTeXFC7L04TLCy";
+$res = array();
+        $res['data']['title'] = $data["title"];
+        $res['data']['message'] = $data['message'];
+        $res['data']['image'] = $data['image'];
+        $res['data']['type'] = $data['type'];
+        $res['data']['id'] = $data['user_id'];
+        $fields = array(
+            'to' => $user->device_token,
+            'data' => $res,
+        );
+
+        $url = 'https://fcm.googleapis.com/fcm/send';
+
+        $headers = array(
+            'Authorization: key=' .setting("fmc"),
+            'Content-Type: application/json'
+        );
+
+        //Initializing curl to open a connection
+        $ch = curl_init();
+
+        //Setting the curl url
+        curl_setopt($ch, CURLOPT_URL, $url);
+
+        //setting the method as post
+        curl_setopt($ch, CURLOPT_POST, true);
+
+        //adding headers
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        //disabling ssl support
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+        //adding the fields in json format
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+
+        //finally executing the curl request
+        $result = curl_exec($ch);
+        if ($result === FALSE) {
+            die('Curl failed: ' . curl_error($ch));
+        }
+
+        //Now close the connection
+        curl_close($ch);
+
+        //and return the result
+        return $result;
     }
 }
 
@@ -53,6 +109,7 @@ if (! function_exists('send_otp')) {
 
 if (! function_exists('notification')) {
     function notification($title,$description,$type,$user_id,$img=null) {
+
         return Notification::create([
             'user_id' => $user_id,
             'title' => $title,

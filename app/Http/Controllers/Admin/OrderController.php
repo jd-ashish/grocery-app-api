@@ -416,6 +416,8 @@ class OrderController extends Controller
 
     public function update_delivery_status(Request $request)
     {
+
+        // return $request;
         $order = Order::findOrFail($request->order_id);
         $oid_cancel = $order->orderDetails->first();
         if($oid_cancel->delivery_status=='cancel'){
@@ -426,8 +428,28 @@ class OrderController extends Controller
 
         //print_r(json_encode($order));
 
+        if($request->status="delivered"){
+            $data_fmc=[
+                "title"=>"Order id delivered",
+                "message"=>"Your order is  delivered successfully",
+                "image"=>null,
+                "type"=>"new_order",
+                "user_id"=>$order->user_id,
+            ];
 
+            fmc($data_fmc);
+        }
         if($request->status=="on_delivery"){
+
+            $data_fmc=[
+            "title"=>"Order On delivered",
+            "message"=>"Your order is on the way",
+            "image"=>null,
+            "type"=>"new_order",
+            "user_id"=>$order->user_id,
+            ];
+
+            fmc($data_fmc);
 
             /* if($order->payment_type=="cash_on_delivery"){
                 $paymentMod = "cod";
