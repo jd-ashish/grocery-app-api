@@ -36,14 +36,15 @@
                     <div class="card-body">
                         <h4 class="card-title">User list</h4>
                         <div class="table-responsive pt-3">
+                            {{-- Commented code will be get upgrade version --}}
                             <table id="table" class="display" style="width: 100%">
                                 <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Progress</th>
+                                        {{-- <th>Progress</th> --}}
                                         <th>Phone</th>
-                                        <th>Amount</th>
+
                                         <th>Created at</th>
                                         <th>Action</th>
                                     </tr>
@@ -53,15 +54,15 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $user->name }}</td>
-                                            <td>
+                                            {{-- <td>
                                                 <div class="progress">
                                                     <div class="progress-bar bg-success" role="progressbar"
                                                         style="width: 25%" aria-valuenow="25" aria-valuemin="0"
                                                         aria-valuemax="100"></div>
                                                 </div>
-                                            </td>
+                                            </td> --}}
                                             <td> {{ $user->phone }} </td>
-                                            <td>$ 77.99</td>
+
                                             <td>{{ $user->created_at->diffForHumans() }}</td>
                                             <td style="cursor: pointer">
                                                 <ul class="navbar-nav navbar-nav-right">
