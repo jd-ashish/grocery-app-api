@@ -20,8 +20,9 @@ Route::get('/', function () {
         if(setting("live")!="1"){
             return redirect(route("install.app"));
         }
+	return view('welcome.index');
     }
-
+	return redirect(route("install.app"));
 // $data_fmc=[
 // "title"=>"tes in th app",
 // "message"=>"tes in th app",
