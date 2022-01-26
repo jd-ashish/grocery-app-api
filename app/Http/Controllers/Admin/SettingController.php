@@ -50,6 +50,9 @@ class SettingController extends Controller
         return view('admin.settings.home_section.general_setting',compact('general_setting'));
     }
     public function GeneralSettingStore(Request $request){
+        if(env('DEMO')){
+            return back()->with("error","cannot update in demo");
+        }
         $general_setting = new GeneralSetting();
         $general_setting->user_id = Auth::user()->id;
         $general_setting->logo = $request->image;
@@ -89,11 +92,17 @@ class SettingController extends Controller
         return view("admin.settings.policy.about_us");
     }
     public function privacy_policy(Request $request){
+        if(env('DEMO')){
+            return back()->with("error","cannot update in demo");
+        }
         $this->createUpdate($request->key,$request->val);
         notification("Policy update",ucfirst(str_replace("_"," ",$request->key))." Updated","global_setting",Auth::user()->id);
         return back()->with("success",ucfirst(str_replace("_"," ",$request->key))." Updated successfully");
     }
     public function GlobalSettingStore(Request $request){
+        if(env('DEMO')){
+            return back()->with("error","cannot update in demo");
+        }
 
         // return $request;
         $setting = Setting::where('key_name','default_storage')->first();

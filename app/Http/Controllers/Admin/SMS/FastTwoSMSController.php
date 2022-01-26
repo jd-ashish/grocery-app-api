@@ -42,6 +42,9 @@ class FastTwoSMSController extends Controller
     }
 
     public function saveF2s(Request $request){
+        if(env('DEMO')){
+            return back()->with("error","cannot update in demo");
+        }
         if($request->has("fast_2_sms_api_key")){
             SettingController::createUpdate("fast_2_sms_api_key",$request->fast_2_sms_api_key);
         }

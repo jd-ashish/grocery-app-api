@@ -80,139 +80,38 @@
                             <div class="form-group">
                                 <label>MAIL HOST</label>
                                 <input type="text" class="form-control MAIL_HOST form-control-sm" placeholder="MAIL HOST"
-                                    name="MAIL_HOST" aria-label="MAIL_HOST" value="{{ env('MAIL_HOST') }}">
+                                    name="MAIL_HOST" aria-label="MAIL_HOST" value="@if(env('DEMO'))****************************************************************@else{{ env('MAIL_HOST') }}@endif">
                             </div>
                             <div class="form-group">
                                 <label>MAIL PORT</label>
                                 <input type="text" class="form-control MAIL_PORT form-control-sm" placeholder="MAIL PORT"
-                                    name="MAIL_PORT" aria-label="MAIL_PORT" value="{{ env('MAIL_PORT') }}">
+                                    name="MAIL_PORT" aria-label="MAIL_PORT" value="@if(env('DEMO'))****************************************************************@else{{ env('MAIL_PORT') }}@endif">
                             </div>
                             <div class="form-group">
                                 <label>MAIL USERNAME</label>
                                 <input type="text" class="form-control MAIL_USERNAME form-control-sm" placeholder="MAIL USERNAME"
-                                    name="MAIL_USERNAME" aria-label="MAIL_USERNAME" value="{{ env('MAIL_USERNAME') }}">
+                                    name="MAIL_USERNAME" aria-label="MAIL_USERNAME" value="@if(env('DEMO'))****************************************************************@else{{ env('MAIL_USERNAME') }}@endif">
                             </div>
                             <div class="form-group">
                                 <label>MAIL PASSWORD</label>
                                 <input type="text" class="form-control MAIL_PASSWORD form-control-sm" placeholder="MAIL PASSWORD"
-                                    name="MAIL_PASSWORD" aria-label="MAIL_PASSWORD" value="{{ env('MAIL_PASSWORD') }}">
+                                    name="MAIL_PASSWORD" aria-label="MAIL_PASSWORD" value="@if(env('DEMO'))****************************************************************@else{{ env('MAIL_PASSWORD') }}@endif">
                             </div>
                             <div class="form-group">
                                 <label>MAIL ENCRYPTION</label>
                                 <input type="text" class="form-control MAIL_ENCRYPTION form-control-sm" placeholder="MAIL ENCRYPTION"
-                                    name="MAIL_ENCRYPTION" aria-label="MAIL_ENCRYPTION" value="{{ env('MAIL_ENCRYPTION') }}">
+                                    name="MAIL_ENCRYPTION" aria-label="MAIL_ENCRYPTION" value="@if(env('DEMO'))****************************************************************@else{{ env('MAIL_ENCRYPTION') }}@endif">
                             </div>
                             <div class="form-group">
                                 <label>MAIL FROM ADDRESS</label>
                                 <input type="text" class="form-control MAIL_FROM_ADDRESS form-control-sm" placeholder="MAIL FROM ADDRESS"
-                                    name="MAIL_FROM_ADDRESS" aria-label="MAIL_FROM_ADDRESS" value="{{ env('MAIL_FROM_ADDRESS') }}">
+                                    name="MAIL_FROM_ADDRESS" aria-label="MAIL_FROM_ADDRESS" value="@if(env('DEMO'))****************************************************************@else{{ env('MAIL_FROM_ADDRESS') }}@endif">
                             </div>
                             <div class="template-demo float-right">
                                 <button type="button" class="btn btn-outline-primary btn-icon-text saveSmtpEmail">
                                     <i class="mdi mdi-file-check btn-icon-prepend"></i>
                                     Save EMAIL Configurations
                                 </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Payment Getway</h4>
-                            <div class="form-group">
-                                <div class="form-check form-check-primary">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input" name="razorpay"
-                                            value="1" id="ExampleRadio1" @if(setting('razorpay')=="1") checked @endif>
-                                        Razorapy
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>RZP SECRTL</label>
-                                <input type="text" class="form-control form-control-sm RZP_SECRT" placeholder="Razorpay SECRT key"
-                                    name="RZP_SECRT" aria-label="phone" value="{{ env('RZP_SECRT') }}">
-                            </div>
-                            <div class="form-group ">
-                                <label>RZP KEY</label>
-                                <input type="text" class="form-control form-control-sm RZP_KEY" placeholder="RZP KEY ID"
-                                    name="RZP_KEY" aria-label="RZP_KEY"
-                                    value="{{ env('RZP_KEY') }}">
-                            </div>
-                            <div class="form-group ">
-                                <label>RZP AUTH </label>
-                                <input type="text" class="form-control form-control-sm RZP_AUTH" placeholder="RZP AUTH"
-                                    name="RZP_AUTH" aria-label="RZP_AUTH"
-                                    value="{{ env('RZP_AUTH') }}">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Cashfree payment getway.</h4>
-                            <div class="form-group">
-                                <div class="form-check form-check-primary">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input" name="cashfree"
-                                            value="1" id="ExampleRadio1" @if(setting('cashfree')=="1") checked @endif>
-                                        Cashfree
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>APP ID</label>
-                                <input type="text" class="form-control form-control-sm APP_ID" placeholder="APP ID"
-                                    name="APP_ID" aria-label="phone" value="{{ env('APP_ID') }}">
-                            </div>
-                            <div class="form-group ">
-                                <label>Secret Key</label>
-                                <input type="text" class="form-control form-control-sm SecretKey" placeholder="Secret Key"
-                                    name="SecretKey" aria-label="SecretKey"
-                                    value="{{ env('SecretKey') }}">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Product releted</h4>
-                            <div class="form-group">
-                                <label>Max Execlusive Offfer Main Screen</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Max Execlusive Offfer Main Screen" aria-label="max_execlusive" name="max_execlusive" value="{{ setting('max_execlusive') }}">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Exclusive offer.</h4>
-                            <div class="form-group">
-                                <div class="form-check form-check-primary">
-                                    <label class="form-check-label">
-                                        <input type="radio" class="form-check-input " name="exclusive_offer_type"
-                                            value="card"  @if(setting('exclusive_offer_type')=="card") checked @endif>
-                                        Card wise
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-success">
-                                    <label class="form-check-label">
-                                        <input type="radio" class="form-check-input storageDriver" name="exclusive_offer_type"
-                                            value="product"  @if(setting('exclusive_offer_type')=="product") checked @endif>
-                                        Product Wise
-                                    </label>
-                                </div>
                             </div>
                         </div>
                     </div>

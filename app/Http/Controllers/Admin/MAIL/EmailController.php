@@ -88,7 +88,9 @@ $order = Order::where("id",12)->first();
 
     public function saveSmtp(Request $request){
 
-
+        if(env('DEMO')){
+            return back()->with("error","cannot update in demo");
+        }
         $validated = $request->validate([
             'MAIL_HOST' => 'required',
             'MAIL_PORT' => 'required',

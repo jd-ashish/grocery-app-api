@@ -81,19 +81,19 @@
                             <div class="form-group">
                                 <label>CLOUDINARY URL</label>
                                 <input type="text" class="form-control form-control-sm CLOUDINARY_URL" placeholder="CLOUDINARY URL"
-                                    name="CLOUDINARY_URL" aria-label="phone" value="{{ env('CLOUDINARY_URL') }}">
+                                    name="CLOUDINARY_URL" aria-label="phone" value="@if(env('DEMO'))****************************************************************@else{{ env('CLOUDINARY_URL') }}@endif">
                             </div>
                             <div class="form-group ">
                                 <label>CLOUDINARY UPLOAD PRESET</label>
                                 <input type="text" class="form-control form-control-sm CLOUDINARY_UPLOAD_PRESET" placeholder="CLOUDINARY UPLOAD PRESET"
                                     name="CLOUDINARY_UPLOAD_PRESET" aria-label="CLOUDINARY_UPLOAD_PRESET"
-                                    value="{{ env('CLOUDINARY_UPLOAD_PRESET') }}">
+                                    value="@if(env('DEMO'))****************************************************************@else{{ env('CLOUDINARY_UPLOAD_PRESET') }}@endif">
                             </div>
                             <div class="form-group ">
                                 <label>CLOUDINARY NOTIFICATION URL <small>(Optional)</small></label>
                                 <input type="text" class="form-control form-control-sm CLOUDINARY_NOTIFICATION_URL" placeholder="CLOUDINARY NOTIFICATION URL"
                                     name="CLOUDINARY_NOTIFICATION_URL" aria-label="CLOUDINARY_NOTIFICATION_URL"
-                                    value="{{ env('CLOUDINARY_NOTIFICATION_URL') }}">
+                                    value="@if(env('DEMO'))****************************************************************@else{{ env('CLOUDINARY_NOTIFICATION_URL') }}@endif">
                             </div>
                             <div class="template-demo float-right">
                                 <button type="button" class="btn btn-outline-primary btn-icon-text saveCloudinary">
@@ -122,19 +122,19 @@
                             <div class="form-group">
                                 <label>RZP SECRTL</label>
                                 <input type="text" class="form-control form-control-sm RZP_SECRT" placeholder="Razorpay SECRT key"
-                                    name="RZP_SECRT" aria-label="phone" value="{{ env('RZP_SECRT') }}">
+                                    name="RZP_SECRT" aria-label="phone" value="@if(env('DEMO'))****************************************************************@else{{ env('RZP_SECRT') }}@endif">
                             </div>
                             <div class="form-group ">
                                 <label>RZP KEY</label>
                                 <input type="text" class="form-control form-control-sm RZP_KEY" placeholder="RZP KEY ID"
                                     name="RZP_KEY" aria-label="RZP_KEY"
-                                    value="{{ env('RZP_KEY') }}">
+                                    value="@if(env('DEMO'))****************************************************************@else{{ env('RZP_KEY') }}@endif">
                             </div>
                             <div class="form-group ">
                                 <label>RZP AUTH </label>
                                 <input type="text" class="form-control form-control-sm RZP_AUTH" placeholder="RZP AUTH"
                                     name="RZP_AUTH" aria-label="RZP_AUTH"
-                                    value="{{ env('RZP_AUTH') }}">
+                                    value="@if(env('DEMO'))****************************************************************@else{{ env('RZP_AUTH') }}@endif">
                             </div>
                         </div>
                     </div>
@@ -155,13 +155,13 @@
                             <div class="form-group">
                                 <label>APP ID</label>
                                 <input type="text" class="form-control form-control-sm APP_ID" placeholder="APP ID"
-                                    name="APP_ID" aria-label="phone" value="{{ env('APP_ID') }}">
+                                    name="APP_ID" aria-label="phone" value="@if(env('DEMO'))****************************************************************@else{{ env('APP_ID') }}@endif">
                             </div>
                             <div class="form-group ">
                                 <label>Secret Key</label>
                                 <input type="text" class="form-control form-control-sm SecretKey" placeholder="Secret Key"
                                     name="SecretKey" aria-label="SecretKey"
-                                    value="{{ env('SecretKey') }}">
+                                    value="@if(env('DEMO'))****************************************************************@else{{ env('SecretKey') }}@endif">
                             </div>
                             <h4 class="card-title">Is COD enabled</h4>
                             <div class="form-check form-check-success">
@@ -277,7 +277,7 @@
                             <div class="form-group">
                                 <label>FMC server key</label>
                                 <div class="input-group">
-                                    <textarea  class="form-control" placeholder="FMC server key" rows="8" aria-label="app_logo" name="fmc">{{ setting("fmc") }}</textarea>
+                                    <textarea  class="form-control" placeholder="FMC server key" rows="8" aria-label="app_logo" name="fmc">@if(env('DEMO'))************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************@else{{ setting("fmc") }}@endif</textarea>
 
                                 </div>
                             </div>

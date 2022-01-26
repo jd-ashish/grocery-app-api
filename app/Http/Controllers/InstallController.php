@@ -57,21 +57,25 @@ class InstallController extends Controller
 
         $resp = curl_exec($curl);
         curl_close($curl);
-        if(array_key_exists("error",json_decode($resp,true))){
+      
+        if(json_decode($resp)->error){
+          
             return json_decode($resp,true);
         }else{
             $path = Storage::path(installDir());
 
             $file_url = json_decode($resp)->file;
+          //file_put_contents("update.sql", file_get_contents($file_url));
+          copy($file_url, $path);
 
-            $fp = fopen($path, "w+");
+            /*$fp = fopen($path, "w+");
 
             $ch = curl_init($file_url);
             curl_setopt($ch, CURLOPT_FILE, $fp);
             curl_exec($ch);
             $st_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             curl_close($ch);
-            fclose($fp);
+            fclose($fp);*/
             return json_decode($resp,true);
         }
 
